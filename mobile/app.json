@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "WatchWhere",
+    "slug": "watchwhere",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "watchwhere",
+    "userInterfaceStyle": "automatic",
+    "platforms": ["ios", "android"],
+    "ios": {
+      "bundleIdentifier": "com.watchwhere.app"
+    },
+    "android": {
+      "package": "com.watchwhere.app"
+    }
+  }
+}
