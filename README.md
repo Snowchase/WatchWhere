@@ -37,13 +37,75 @@ Supports **movies**, **TV shows**, **anime**, and **live sports**.
 
 ---
 
+## Prerequisites
+
+- Python 3.11+
+- Node.js 18+
+- PostgreSQL 15+
+- Redis 7+
+- Docker & Docker Compose (recommended)
+
+---
+
+## Getting Started
+
+### 1. Clone and configure environment variables
+
+```bash
+git clone https://github.com/Snowchase/WatchWhere.git
+cd WatchWhere
+cp .env.example .env
+```
+
+Edit `.env` and fill in the required values (see [Environment Variables](#environment-variables) below).
+
+### 2. Start services with Docker Compose
+
+```bash
+docker compose up -d
+```
+
+### 3. Run database migrations
+
+```bash
+docker compose exec api alembic upgrade head
+```
+
+### 4. Start the web frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The API will be available at `http://localhost:8000` and the web app at `http://localhost:5173`.
+
+---
+
+## Environment Variables
+
+| Variable | Description | Required |
+|---|---|---|
+| `DATABASE_URL` | PostgreSQL connection string | Yes |
+| `REDIS_URL` | Redis connection string | Yes |
+| `WATCHMODE_API_KEY` | [Watchmode API](https://api.watchmode.com/) key | Yes |
+| `TMDB_API_KEY` | [TMDB API](https://developer.themoviedb.org/) key | Yes |
+| `ANILIST_CLIENT_ID` | AniList OAuth client ID | For anime features |
+| `SPORTS_DB_API_KEY` | [TheSportsDB](https://www.thesportsdb.com/api.php) API key | For sports features |
+| `SENDGRID_API_KEY` | SendGrid API key for email notifications | For notifications |
+| `FCM_SERVER_KEY` | Firebase Cloud Messaging server key | For push notifications |
+| `SECRET_KEY` | Secret key for JWT signing | Yes |
+
+---
+
 ## Data Sources
 
 - **Watchmode API** — primary streaming availability (~150 services)
 - **TMDB API** — movie and TV metadata
 - **AniList GraphQL** — anime metadata and streaming links
 - **TheSportsDB API** — sports schedules and broadcast channels
-- **JustWatch** *(scraped)* — fallback availability data
+- **JustWatch** *(scraped)* — fallback availability data; scraping is done respectfully with rate limiting; verify compliance with their current ToS before deploying
 - **Platform pages** *(scraped)* — expiry dates for leaving-soon content
 
 ---
@@ -75,6 +137,15 @@ Supports **movies**, **TV shows**, **anime**, and **live sports**.
 
 ---
 
-## Documentation
+## Contributing
 
-Full architecture, database schema, API reference, and pipeline design are covered in [`WatchWhere_SDS.docx`](./WatchWhere_SDS.docx).
+1. Fork the repository and create a feature branch from `main`
+2. Make your changes with clear, focused commits
+3. Ensure any new API integrations are documented in the environment variables table
+4. Open a pull request with a description of the change and why it's needed
+
+---
+
+## License
+
+MIT License — see [LICENSE](./LICENSE) for details.
